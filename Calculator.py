@@ -30,18 +30,22 @@ def numButton(button):
 #passed as an argument when the equals button it called
 currentFunction = None
 num1 = None
-def setFunction(myFunc):
+num2 = None
+def setFunction(button):
     #sets global current function to the one pressed
     num1 = displayLabel.cget("text")
     displayLabel.config(text= '')
-    currentFunction = myFunc
+    currentFunction = button.cget("text")
 
+#does not work, error about floats
 def equals(num1, num2, funcion):
-    #get the current text from label, or do that at call
-    #casting
-    #check the function passed
-    #display the new number formated on displayLabel
-    pass
+    num2 = displayLabel.cget("text")
+    num1 = float(num1)
+    num2 = float(num2)
+    if function == '+':
+        result = num1 + num2
+        displayLabel.config(text=result)
+        return result
 
 #------------------------------------------------------------------------------
 window = tk.Tk()
@@ -102,20 +106,20 @@ buttonDot = Button(numFrame, text = ".",  command= lambda:numButton(buttonDot))
 themer(buttonDot)
 buttonDot.grid(column= 1, row = 3)
 
-buttonEquals = Button(numFrame, text = "=",  command= None) 
+buttonEquals = Button(numFrame, text = "=",  command= lambda:equals(num1, num2, currentFunction)) 
 buttonEquals.config(bg = red)
 themer(buttonEquals, color= False)
 buttonEquals.grid(column= 2, row = 3)
 
-buttonMult = Button(window, text = 'x',  command= None) 
+buttonMult = Button(window, text = 'x',  command= lambda:setFunction(buttonMult)) 
 themer(buttonMult)
 buttonMult.grid(column = 2, row = 2)
 
-buttonMinus = Button(window, text = '-',  command= None) 
+buttonMinus = Button(window, text = '-',  command= lambda:setFunction(buttonMinus)) 
 themer(buttonMinus)
 buttonMinus.grid(column = 2, row = 3)
 
-buttonPlus = Button(window, text = '+',  command= None) 
+buttonPlus = Button(window, text = '+',  command= lambda:setFunction(buttonPlus)) 
 themer(buttonPlus, size=False)
 buttonPlus.config(width = 4, height = 5)
 buttonPlus.grid(column = 2, row = 4, rowspan = 2)
