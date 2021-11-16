@@ -4,22 +4,24 @@ from tkinter import *
 #graphic calculator 3d slots
 
 #theming stuff--------------------------------------------------------------
-bgColor = 'cornflowerblue'
-red = 'firebrick'
+themes = [['cornflowerblue', 'slategray', 'sandybrown', 'red', 'white'], ['lightgray', 'slategray', 'sandybrown', 'red', 'white'], ['dimgray', 'lightgray', 'sandybrown', 'lightskyblue', 'black']]
+theme = themes[2]
 
-def themer(button, color = True, size= True, font = True, pad = True, unsunken=True, border = True):
+
+bgColor = theme[0]
+buttonColor = theme[1]
+secondaryColor = theme[2]
+tertiaryColor = theme[3]
+fontColor = theme[4]
+
+def themer(button, color = True, size= True):
     if color:
-        button.config(fg = 'white', bg = 'slategray')
+        button.config(fg = fontColor, bg = buttonColor)
     if size:
         button.config(width= 4, height= 2)
-    if font:
-        button.config(font= ("Courier New", 20, "bold"))
-    if pad:
-        button.grid(padx= 5, pady= 5)
-    if unsunken:
-        button.config(relief = 'groove')
-    if border:
-        pass
+    button.config(font= ("Courier New", 20, "bold"))
+    button.grid(padx= 5, pady= 5)
+    button.config(relief = 'solid')
 
 #---------------------------------------------------------------------------
 #Top Button functions
@@ -89,11 +91,12 @@ window.config(bg= bgColor)
 window.resizable(False, False)
 
 #might want to change this to a text field?
-displayLabel = Label(window, text = '', width = 40, height = 4, bg = 'white', font = ("Courier New", 14, "bold"), justify = 'right')
+displayLabel = Label(window, text = '', width = 40, height = 4, bg = 'white', font = ("Courier New", 14, "bold"), justify = 'right', relief='solid')
 displayLabel.grid(column= 0, row = 0, padx = 20, pady = 20, columnspan= 4)
 
 buttonAllClear = Button(window, text= 'Ac', command=allClear)
-themer(buttonAllClear)
+themer(buttonAllClear, color= False)
+buttonAllClear.config(fg= fontColor, bg = secondaryColor)
 buttonAllClear.grid(column= 0, row = 1)
 
 buttonExp = Button(window, text= 'x\u207F', command=lambda:setFunction(buttonExp))
@@ -154,7 +157,7 @@ buttonDot.grid(column= 1, row = 5)
 #--------------------------------------------------------------------------------
 #right side function buttons
 buttonEquals = Button(window, text = "=",  command= lambda:equals()) 
-buttonEquals.config(bg = red)
+buttonEquals.config(fg = fontColor ,bg = tertiaryColor)
 themer(buttonEquals, color= False)
 buttonEquals.grid(column= 2, row = 5)
 
