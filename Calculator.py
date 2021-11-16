@@ -4,7 +4,7 @@ from tkinter import *
 #graphic calculator 3d slots
 
 #theming stuff--------------------------------------------------------------
-themes = [['cornflowerblue', 'slategray', 'sandybrown', 'red', 'white'], ['lightgray', 'slategray', 'sandybrown', 'red', 'white'], ['dimgray', 'lightgray', 'sandybrown', 'lightskyblue', 'black']]
+themes = [['cornflowerblue', 'slategray', 'sandybrown', 'red', 'white'], ['lightgray', 'slategray', 'sandybrown', 'red', 'white'],['dimgray', 'lightgray', 'sandybrown', 'lightskyblue', 'black'], ['linen', 'peachpuff', 'darkturquoise', 'salmon', 'saddlebrown']]
 theme = themes[2]
 
 
