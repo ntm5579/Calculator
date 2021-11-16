@@ -9,7 +9,7 @@ red = 'firebrick'
 
 def themer(button, color = True, size= True, font = True, pad = True):
     if color:
-        button.config(fg = 'white', bg = bgColor)
+        button.config(fg = 'white', bg = 'darkgray')
     if size:
         button.config(width= 4, height= 2)
     if font:
