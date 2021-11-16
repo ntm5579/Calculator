@@ -28,13 +28,13 @@ def numButton(button):
 
 
 #passed as an argument when the equals button it called
-current_function = None
+currentFunction = None
 num1 = None
 def setFunction(myFunc):
     #sets global current function to the one pressed
-    #clears the screen of the old number and saves it in global num1
-
-    pass
+    num1 = displayLabel.cget("text")
+    displayLabel.config(text= '')
+    currentFunction = myFunc
 
 def equals(num1, num2, funcion):
     #get the current text from label, or do that at call
