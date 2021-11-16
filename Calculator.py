@@ -18,13 +18,34 @@ def themer(button, color = True, size= True, font = True, pad = True):
         button.grid(padx= 5, pady= 5)
 
 #---------------------------------------------------------------------------
+#Button functions
+def numButton(num):
+    #displayLabel.config(text=Label.getText + num)
+    pass
+#passed as an argument when the equals button it called
+current_function = None
+num1 = None
+def setFunction(myFunc):
+    #sets global current function to the one pressed
+    #clears the screen of the old number and saves it in global num1
 
+    pass
+
+def equals(num1, num2, funcion):
+    #get the current text from label, or do that at call
+    #casting
+    #check the function passed
+    #display the new number formated on displayLabel
+    pass
+
+#------------------------------------------------------------------------------
 window = tk.Tk()
 window.title("Calculator")
 window.geometry('500x600')
 window.config(bg= bgColor)
 window.resizable(False, False)
 
+#might want to change this to a text field?
 displayLabel = Label(window, text = 'test and 000101010', width = 40, height = 2, bg = 'white', font = ("Courier New", 12, "bold"))
 displayLabel.grid(column= 0, row = 0, padx = 5, pady = 5, columnspan= 3)
 
