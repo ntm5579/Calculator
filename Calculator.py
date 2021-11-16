@@ -23,7 +23,12 @@ def themer(button, color = True, size= True, font = True, pad = True, unsunken=T
 
 #---------------------------------------------------------------------------
 #Button functions
+def checkClear():
+    if displayLabel.cget("text").count('=') > 0:
+        displayLabel.config(text = '')
+
 def numButton(button):
+    checkClear()
     displayLabel.config(text= displayLabel.cget("text") + button.cget("text"))
 
 
@@ -33,20 +38,33 @@ num1 = None
 num2 = None
 def setFunction(button):
     #sets global current function to the one pressed
+    global num1
+    global currentFunction
     num1 = displayLabel.cget("text")
     displayLabel.config(text= '')
     currentFunction = button.cget("text")
 
 #does not work, error about floats
-def equals(num1, num2, funcion):
+def equals():
+    global num1
+    global num2
+    global currentFunction
     num2 = displayLabel.cget("text")
     num1 = float(num1)
     num2 = float(num2)
-    if function == '+':
+    if currentFunction == '+':
         result = num1 + num2
-        displayLabel.config(text=result)
-        return result
-
+    elif currentFunction == '-':
+        result = num1 - num2
+    elif currentFunction == 'x':
+        result = num1 * num2
+    elif currentFunction == '/':
+        result = num1 / num2
+    else:
+        print('What kinda funky shit are you trying?')
+        return
+    displayLabel.config(text= '= ' + str(result))
+    return result
 #------------------------------------------------------------------------------
 window = tk.Tk()
 window.title("Calculator")
@@ -55,8 +73,9 @@ window.config(bg= bgColor)
 window.resizable(False, False)
 
 #might want to change this to a text field?
-displayLabel = Label(window, text = '', width = 40, height = 2, bg = 'white', font = ("Courier New", 12, "bold"))
+displayLabel = Label(window, text = '', width = 40, height = 2, bg = 'white', font = ("Courier New", 12, "bold"), justify = 'right')
 displayLabel.grid(column= 0, row = 0, padx = 5, pady = 5, columnspan= 3)
+#----------------------------------------------------------------------------
 
 numFrame = Frame(window, width = 100, height = 100)
 numFrame.config(bg= bgColor)
@@ -106,7 +125,7 @@ buttonDot = Button(numFrame, text = ".",  command= lambda:numButton(buttonDot))
 themer(buttonDot)
 buttonDot.grid(column= 1, row = 3)
 
-buttonEquals = Button(numFrame, text = "=",  command= lambda:equals(num1, num2, currentFunction)) 
+buttonEquals = Button(numFrame, text = "=",  command= lambda:equals()) 
 buttonEquals.config(bg = red)
 themer(buttonEquals, color= False)
 buttonEquals.grid(column= 2, row = 3)
