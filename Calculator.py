@@ -59,7 +59,12 @@ def equals():
     global num1
     global num2
     global currentFunction
-    num2 = displayLabel.cget("text")
+    displayContents = displayLabel.cget("text")
+    if displayContents.count('=') < 1:
+        num2 = displayContents
+    else:
+        print('um')
+    
     try:
         num1 = float(num1)
         num2 = float(num2)
@@ -81,7 +86,7 @@ def equals():
         return
     displayLabel.config(text= '= ' + str(result))
     num1 = result 
-    num2 = None
+    #num2 = None
     return result
 #------------------------------------------------------------------------------
 window = tk.Tk()
