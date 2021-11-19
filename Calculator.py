@@ -4,24 +4,31 @@ from tkinter import *
 #graphic calculator 3d slots
 
 #theming stuff--------------------------------------------------------------
-themes = [['cornflowerblue', 'slategray', 'sandybrown', 'red', 'white'], ['lightgray', 'slategray', 'sandybrown', 'red', 'white'],['dimgray', 'lightgray', 'sandybrown', 'lightskyblue', 'black'], ['linen', 'peachpuff', 'darkturquoise', 'salmon', 'saddlebrown']]
-theme = themes[2]
+class Theme():
+    def __init__(self, font = 'black', button = 'white', bg = 'lightgray', second = 'white', third =  'white'):
+        self.fontColor = font
+        self.buttonColor = button
+        self.bgColor = bg
+        self.secondaryColor = second
+        self.tertiaryColor = third
 
+mainDark = Theme('black', 'lightgray', 'dimgray', 'sandybrown', 'lightskyblue')
+altDark = Theme('white', 'slategray','lightgray', 'sandybrown', 'red')
+mainColorful = Theme('white', 'slategray', 'cornflowerblue', 'sandybrown', 'red')
+altColorful = Theme('white', 'mediumslateblue', 'mediumspringgreen', 'cyan', '#89043D')
+neutral = Theme('saddlebrown', 'peachpuff', 'linen', 'darkturquoise', 'salmon')
+grayscale = Theme()
 
-bgColor = theme[0]
-buttonColor = theme[1]
-secondaryColor = theme[2]
-tertiaryColor = theme[3]
-fontColor = theme[4]
+currentTheme = grayscale
 
 def themer(button, color = True, size= True):
     if color:
-        button.config(fg = fontColor, bg = buttonColor)
+        button.config(fg = currentTheme.fontColor, bg = currentTheme.buttonColor)
     if size:
         button.config(width= 4, height= 2)
     button.config(font= ("Courier New", 20, "bold"))
     button.grid(padx= 5, pady= 5)
-    button.config(relief = 'solid')
+    button.config(relief = 'solid', activebackground=currentTheme.bgColor)
 
 #---------------------------------------------------------------------------
 #Top Button functions
@@ -92,89 +99,92 @@ def equals():
 window = tk.Tk()
 window.title("Calculator")
 window.geometry('500x620')
-window.config(bg= bgColor)
+window.config(bg= currentTheme.bgColor)
 window.resizable(False, False)
 
-#might want to change this to a text field?
-displayLabel = Label(window, text = '', width = 40, height = 4, bg = 'white', font = ("Courier New", 14, "bold"), justify = 'right', relief='solid')
-displayLabel.grid(column= 0, row = 0, padx = 20, pady = 20, columnspan= 4)
+alignFrame = Frame(window, bg= currentTheme.bgColor)
+alignFrame.pack()
 
-buttonAllClear = Button(window, text= 'Ac', command=allClear)
+#might want to change this to a text field?
+displayLabel = Label(alignFrame, text = '', width = 23, height = 2, bg = 'white', font = ("Courier New", 20, "bold"), relief='solid')
+displayLabel.grid(column= 0, row = 0, padx = 15, pady = 15, columnspan= 4)
+
+buttonAllClear = Button(alignFrame, text= 'Ac', command=allClear)
 themer(buttonAllClear, color= False)
-buttonAllClear.config(fg= fontColor, bg = secondaryColor)
+buttonAllClear.config(fg= currentTheme.fontColor, bg = currentTheme.secondaryColor)
 buttonAllClear.grid(column= 0, row = 1)
 
-buttonExp = Button(window, text= 'x\u207F', command=lambda:setFunction(buttonExp))
+buttonExp = Button(alignFrame, text= 'x\u207F', command=lambda:setFunction(buttonExp))
 themer(buttonExp)
 buttonExp.grid(column= 1, row = 1)
 
-buttonTBD2 = Button(window, text= 'TBD2')
+buttonTBD2 = Button(alignFrame, text= 'TBD2')
 themer(buttonTBD2)
 buttonTBD2.grid(column= 2, row = 1)
 
-buttonDiv = Button(window, text= '/', command= lambda:setFunction(buttonDiv))
+buttonDiv = Button(alignFrame, text= '/', command= lambda:setFunction(buttonDiv))
 themer(buttonDiv)
 buttonDiv.grid(column= 3, row = 1)
 
-button7 = Button(window, text = "7",  command= lambda:numButton(button7)) 
+button7 = Button(alignFrame, text = "7",  command= lambda:numButton(button7)) 
 themer(button7)
 button7.grid(column= 0, row = 2)
 
-button8 = Button(window, text = "8",  command= lambda:numButton(button8)) 
+button8 = Button(alignFrame, text = "8",  command= lambda:numButton(button8)) 
 themer(button8)
 button8.grid(column= 1, row = 2)
 
-button9 = Button(window, text = "9",  command= lambda:numButton(button9)) 
+button9 = Button(alignFrame, text = "9",  command= lambda:numButton(button9)) 
 themer(button9)
 button9.grid(column= 2, row = 2)
 
-button4 = Button(window, text = "4",  command= lambda:numButton(button4)) 
+button4 = Button(alignFrame, text = "4",  command= lambda:numButton(button4)) 
 themer(button4)
 button4.grid(column= 0, row = 3)
 
-button5 = Button(window, text = "5",  command= lambda:numButton(button5)) 
+button5 = Button(alignFrame, text = "5",  command= lambda:numButton(button5)) 
 themer(button5)
 button5.grid(column= 1, row = 3)
 
-button6 = Button(window, text = "6",  command= lambda:numButton(button6)) 
+button6 = Button(alignFrame, text = "6",  command= lambda:numButton(button6)) 
 themer(button6)
 button6.grid(column= 2, row = 3)
 
-button1 = Button(window, text = "1",  command= lambda:numButton(button1)) 
+button1 = Button(alignFrame, text = "1",  command= lambda:numButton(button1)) 
 themer(button1)
 button1.grid(column= 0, row = 4)
 
-button2 = Button(window, text = "2",  command= lambda:numButton(button2)) 
+button2 = Button(alignFrame, text = "2",  command= lambda:numButton(button2)) 
 themer(button2)
 button2.grid(column= 1, row = 4)
 
-button3 = Button(window, text = "3",  command= lambda:numButton(button3)) 
+button3 = Button(alignFrame, text = "3",  command= lambda:numButton(button3)) 
 themer(button3)
 button3.grid(column= 2, row = 4)
 
-button0 = Button(window, text = "0",  command= lambda:numButton(button0)) 
+button0 = Button(alignFrame, text = "0",  command= lambda:numButton(button0)) 
 themer(button0)
 button0.grid(column= 0, row = 5)
 
-buttonDot = Button(window, text = ".",  command= lambda:numButton(buttonDot)) 
+buttonDot = Button(alignFrame, text = ".",  command= lambda:numButton(buttonDot)) 
 themer(buttonDot)
 buttonDot.grid(column= 1, row = 5)
 #--------------------------------------------------------------------------------
 #right side function buttons
-buttonEquals = Button(window, text = "=",  command= lambda:equals()) 
-buttonEquals.config(fg = fontColor ,bg = tertiaryColor)
+buttonEquals = Button(alignFrame, text = "=",  command= lambda:equals()) 
+buttonEquals.config(fg = currentTheme.fontColor ,bg = currentTheme.tertiaryColor)
 themer(buttonEquals, color= False)
 buttonEquals.grid(column= 2, row = 5)
 
-buttonMult = Button(window, text = 'x',  command= lambda:setFunction(buttonMult)) 
+buttonMult = Button(alignFrame, text = 'x',  command= lambda:setFunction(buttonMult)) 
 themer(buttonMult)
 buttonMult.grid(column = 3, row = 2)
 
-buttonMinus = Button(window, text = '-',  command= lambda:setFunction(buttonMinus)) 
+buttonMinus = Button(alignFrame, text = '-',  command= lambda:setFunction(buttonMinus)) 
 themer(buttonMinus)
 buttonMinus.grid(column = 3, row = 3)
 
-buttonPlus = Button(window, text = '+',  command= lambda:setFunction(buttonPlus)) 
+buttonPlus = Button(alignFrame, text = '+',  command= lambda:setFunction(buttonPlus)) 
 themer(buttonPlus, size=False)
 buttonPlus.config(width = 4, height = 5)
 buttonPlus.grid(column = 3, row = 4, rowspan = 2)
