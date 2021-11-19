@@ -19,16 +19,25 @@ altColorful = Theme('white', 'mediumslateblue', 'mediumspringgreen', 'cyan', '#8
 neutral = Theme('saddlebrown', 'peachpuff', 'linen', 'darkturquoise', 'salmon')
 grayscale = Theme()
 
-currentTheme = grayscale
+currentTheme = mainDark
 
-def themer(button, color = True, size= True):
+elementList = []
+
+def themer(button, color = True, size= True, theme = currentTheme, alignment = True):
     if color:
-        button.config(fg = currentTheme.fontColor, bg = currentTheme.buttonColor)
+        button.config(fg = theme.fontColor, bg = theme.buttonColor)
     if size:
         button.config(width= 4, height= 2)
     button.config(font= ("Courier New", 20, "bold"))
-    button.grid(padx= 5, pady= 5)
-    button.config(relief = 'solid', activebackground=currentTheme.bgColor)
+    if alignment:
+        button.grid(padx= 5, pady= 5)
+    button.config(relief = 'solid', activebackground=theme.bgColor)
+    if(elementList.count(button) < 1):
+        elementList.append(button)
+
+def changeTheme(theme, elements):
+    for element in elements:
+        themer(element, theme = theme)
 
 #---------------------------------------------------------------------------
 #Top Button functions
@@ -104,6 +113,22 @@ window.resizable(False, False)
 
 alignFrame = Frame(window, bg= currentTheme.bgColor)
 alignFrame.pack()
+elementList.append(alignFrame)
+
+clicked = StringVar()
+clicked.set('mainDark')
+drop = OptionMenu(window, clicked, 'mainDark', 'altDark', 'maincolorful', 'altColorful', 'neutral')
+themer(drop, alignment=False, size = False)
+drop.config(font= ("Courier New", 11, "bold"), padx = 5, height = 1)
+drop.pack()
+dropButton = Button(window)
+themer(dropButton, alignment=False, size = False)
+dropButton.config(font= ("Courier New", 11, "bold"), padx = 5, height = 1)
+dropButton.pack()
+
+
+def initThemeChange(clicked):
+    pass
 
 #might want to change this to a text field?
 displayLabel = Label(alignFrame, text = '', width = 23, height = 2, bg = 'white', font = ("Courier New", 20, "bold"), relief='solid')
