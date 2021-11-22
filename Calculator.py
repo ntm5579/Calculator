@@ -1,7 +1,7 @@
+import time
+start = time.time()
 import tkinter as tk
 from tkinter import *
-
-#graphic calculator 3d slots
 
 #theming stuff--------------------------------------------------------------
 class Theme():
@@ -12,15 +12,14 @@ class Theme():
         self.secondaryColor = second
         self.tertiaryColor = third
 
-mainDark = Theme('black', 'lightgray', 'dimgray', 'sandybrown', 'lightskyblue')
-altDark = Theme('white', 'slategray','lightgray', 'sandybrown', 'red')
+mainStandard = Theme('black', 'lightgray', 'dimgray', 'sandybrown', 'lightskyblue')
+altStandard = Theme('white', 'slategray','lightgray', 'sandybrown', 'red')
 mainColorful = Theme('white', 'slategray', 'cornflowerblue', 'sandybrown', 'red')
 altColorful = Theme('white', 'mediumslateblue', 'mediumspringgreen', 'cyan', '#89043D')
 neutral = Theme('saddlebrown', 'peachpuff', 'linen', 'darkturquoise', 'salmon')
 grayscale = Theme()
 
-currentTheme = mainDark
-
+currentTheme = mainStandard
 elementList = []
 
 def themer(button, color = True, size= True, theme = currentTheme, alignment = True):
@@ -44,10 +43,14 @@ def changeTheme(theme, elements):
 def checkDisplayClear():
     if displayLabel.cget("text").count('=') > 0:
         displayLabel.config(text = '')
+        
+def numToDisplay(i):
+    checkDisplayClear()
+    displayLabel.config(text= displayLabel.cget("text") + i)
 
 def numButton(button):
     checkDisplayClear()
-    displayLabel.config(text= displayLabel.cget("text") + button.cget("text"))
+    numToDisplay(button.cget("text"))
 
 def allClear():
     global num1
@@ -94,7 +97,12 @@ def equals():
     elif currentFunction == 'x':
         result = num1 * num2
     elif currentFunction == '/':
-        result = num1 / num2
+        try:
+            result = num1 / num2
+        except ZeroDivisionError:
+            #works for now, haven't found issues with this strategy
+            result = "Error"
+            allClear()
     elif currentFunction == 'x\u207F':
         result = num1 ** num2
     else:
@@ -115,6 +123,8 @@ alignFrame = Frame(window, bg= currentTheme.bgColor)
 alignFrame.pack()
 elementList.append(alignFrame)
 
+# May remove, need a better system---------------------------
+'''
 clicked = StringVar()
 clicked.set('mainDark')
 drop = OptionMenu(window, clicked, 'mainDark', 'altDark', 'maincolorful', 'altColorful', 'neutral')
@@ -126,9 +136,10 @@ themer(dropButton, alignment=False, size = False)
 dropButton.config(font= ("Courier New", 11, "bold"), padx = 5, height = 1)
 dropButton.pack()
 
-
 def initThemeChange(clicked):
     pass
+'''
+#-----------------------
 
 #might want to change this to a text field?
 displayLabel = Label(alignFrame, text = '', width = 23, height = 2, bg = 'white', font = ("Courier New", 20, "bold"), relief='solid')
@@ -213,5 +224,9 @@ buttonPlus = Button(alignFrame, text = '+',  command= lambda:setFunction(buttonP
 themer(buttonPlus, size=False)
 buttonPlus.config(width = 4, height = 5)
 buttonPlus.grid(column = 3, row = 4, rowspan = 2)
+#--------------------------------------------------
+#assign command to buttons
+#window.bind("<Enter>", lambda:numToDisplay("1"))
 
+print("Startup took", "{:.3f}".format(time.time() - start), "seconds.")
 window.mainloop()
