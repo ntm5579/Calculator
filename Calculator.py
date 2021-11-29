@@ -2,43 +2,8 @@ import time
 start = time.time()
 import tkinter as tk
 from tkinter import *
+from Theme import *
 
-#theming stuff--------------------------------------------------------------
-class Theme():
-    def __init__(self, font = 'black', button = 'white', bg = 'lightgray', second = 'white', third =  'white'):
-        self.fontColor = font
-        self.buttonColor = button
-        self.bgColor = bg
-        self.secondaryColor = second
-        self.tertiaryColor = third
-
-mainStandard = Theme('black', 'lightgray', 'dimgray', 'sandybrown', 'lightskyblue')
-altStandard = Theme('white', 'slategray','lightgray', 'sandybrown', 'red')
-mainColorful = Theme('white', 'slategray', 'cornflowerblue', 'sandybrown', 'red')
-altColorful = Theme('white', 'mediumslateblue', 'mediumspringgreen', 'cyan', '#89043D')
-neutral = Theme('saddlebrown', 'peachpuff', 'linen', 'darkturquoise', 'salmon')
-grayscale = Theme()
-
-currentTheme = mainStandard
-elementList = []
-
-def themer(button, color = True, size= True, theme = currentTheme, alignment = True):
-    if color:
-        button.config(fg = theme.fontColor, bg = theme.buttonColor)
-    if size:
-        button.config(width= 4, height= 2)
-    button.config(font= ("Courier New", 20, "bold"))
-    if alignment:
-        button.grid(padx= 5, pady= 5)
-    button.config(relief = 'solid', activebackground=theme.bgColor)
-    if(elementList.count(button) < 1):
-        elementList.append(button)
-
-def changeTheme(theme, elements):
-    for element in elements:
-        themer(element, theme = theme)
-
-#---------------------------------------------------------------------------
 #Top Button functions
 def checkDisplayClear():
     if displayLabel.cget("text").count('=') > 0:
